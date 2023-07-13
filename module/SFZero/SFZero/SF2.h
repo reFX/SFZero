@@ -1,7 +1,6 @@
 #ifndef SF2_h
 #define SF2_h
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "WinTypes.h"
 
 namespace SFZero {

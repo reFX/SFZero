@@ -1,7 +1,6 @@
 #ifndef SF2Reader_h
 #define SF2Reader_h
 
-#include "../JuceLibraryCode/JuceHeader.h"
 #include "SF2.h"
 
 namespace SFZero {

@@ -11,13 +11,13 @@ BEGIN_JUCE_MODULE_DECLARATION
 END_JUCE_MODULE_DECLARATION
 */
 
-#ifndef SFZero_h
-#define SFZero_h
+#pragma once
 
 #include "SFZero/SFZVoice.h"
 #include "SFZero/SFZSound.h"
 #include "SFZero/SFZSynth.h"
+#include "SFZero/SFZSound.h"
+#include "SFZero/SFZSound.h"
+#include "SFZero/SF2Sound.h"
 
-
-#endif
 

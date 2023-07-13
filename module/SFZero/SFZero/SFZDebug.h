@@ -1,8 +1,6 @@
 #ifndef SFZDebug_h
 #define SFZDebug_h
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
 // Juce's standard DBG is all wrong; it only writes to stdout.  So instead, use
 // one that'll write to the real log.
 

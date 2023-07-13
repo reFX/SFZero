@@ -16,10 +16,11 @@ SFZSound::SFZSound(const juce::File& fileIn)
 SFZSound::~SFZSound()
 {
 	int numRegions = regions.size();
-	for (int i = 0; i < numRegions; ++i) {
+	for (int i = 0; i < numRegions; ++i)
+	{
 		delete regions[i];
 		regions.set(i, NULL);
-		}
+	}
 
 	for (juce::HashMap<juce::String,SFZSample*>::Iterator i(samples); i.next();)
 		delete i.getValue();

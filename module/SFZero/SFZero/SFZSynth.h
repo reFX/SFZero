@@ -1,9 +1,6 @@
 #ifndef SFZSynth_h
 #define SFZSynth_h
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
-
 namespace SFZero {
 
 class SFZSynth : public juce::Synthesiser {

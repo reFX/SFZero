@@ -3,7 +3,6 @@
 #include "SFZRegion.h"
 #include "SFZSample.h"
 #include "SFZDebug.h"
-#include <math.h>
 
 using namespace SFZero;
 

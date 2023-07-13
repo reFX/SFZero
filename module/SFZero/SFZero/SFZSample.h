@@ -1,9 +1,6 @@
 #ifndef SFZSample_h
 #define SFZSample_h
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
-
 namespace SFZero {
 
 class SFZSample
