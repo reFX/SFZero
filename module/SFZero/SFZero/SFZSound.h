@@ -19,7 +19,7 @@ class SFZSound : public juce::SynthesiserSound {
 		bool	appliesToChannel(const int midiChannel);
 
 		void	addRegion(SFZRegion* region); 	// Takes ownership of the region.
-		SFZSample*	addSample(juce::String path, juce::String defaultPath = juce::String::empty);
+		SFZSample*	addSample(juce::String path, juce::String defaultPath = {});
 		void	addError(const juce::String& message);
 		void	addUnsupportedOpcode(const juce::String& opcode);
 

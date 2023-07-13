@@ -16,18 +16,18 @@ void SFZSynth::noteOn(int midiChannel, int midiNoteNumber, float velocity)
 {
 	int i;
 
-	const ScopedLock locker(lock);
+	const juce::ScopedLock locker(lock);
 
 	int midiVelocity = (int) (velocity * 127);
 
 	// First, stop any currently-playing sounds in the group.
 	//*** Currently, this only pays attention to the first matching region.
 	int group = 0;
-	SFZSound* sound = dynamic_cast<SFZSound*>(getSound(0));
+	SFZSound* sound = dynamic_cast<SFZSound*>(getSound(0).get());
 	if (sound) {
 		SFZRegion* region = sound->getRegionFor(midiNoteNumber, midiVelocity);
 		if (region)
-			group = region->group;
+			group = int (region->group);
 		}
 	if (group != 0) {
 		for (i = voices.size(); --i >= 0;) {
@@ -86,12 +86,12 @@ void SFZSynth::noteOff(
 	int midiChannel, int midiNoteNumber,
 	float velocity, bool allowTailOff)
 {
-	const ScopedLock locker(lock);
+	const juce::ScopedLock locker(lock);
 
 	Synthesiser::noteOff(midiChannel, midiNoteNumber, velocity, allowTailOff);
 
 	// Start release region.
-	SFZSound* sound = dynamic_cast<SFZSound*>(getSound(0));
+	SFZSound* sound = dynamic_cast<SFZSound*>(getSound(0).get());
 	if (sound) {
 		SFZRegion* region =
 			sound->getRegionFor(
@@ -125,13 +125,13 @@ int SFZSynth::numVoicesUsed()
 }
 
 
-String SFZSynth::voiceInfoString()
+juce::String SFZSynth::voiceInfoString()
 {
 	enum {
 		maxShownVoices = 20,
 		};
 
-	StringArray lines;
+	juce::StringArray lines;
 	int numUsed = 0, numShown = 0;
 	for (int i = voices.size(); --i >= 0;) {
 		SFZVoice* voice = dynamic_cast<SFZVoice*>(voices.getUnchecked(i));
@@ -142,7 +142,7 @@ String SFZSynth::voiceInfoString()
 			continue;
 		lines.add(voice->infoString());
 		}
-	lines.insert(0, "voices used: " + String(numUsed));
+	lines.insert(0, "voices used: " + juce::String(numUsed));
 	return lines.joinIntoString("\n");
 }
 

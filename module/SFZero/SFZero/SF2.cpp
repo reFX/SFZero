@@ -23,61 +23,61 @@ using namespace SFZero;
 	readA##type(name, file)
 
 
-void SF2::iver::ReadFrom(InputStream* file)
+void SF2::iver::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/iver.h"
 }
 
 
-void SF2::phdr::ReadFrom(InputStream* file)
+void SF2::phdr::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/phdr.h"
 }
 
 
-void SF2::pbag::ReadFrom(InputStream* file)
+void SF2::pbag::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/pbag.h"
 }
 
 
-void SF2::pmod::ReadFrom(InputStream* file)
+void SF2::pmod::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/pmod.h"
 }
 
 
-void SF2::pgen::ReadFrom(InputStream* file)
+void SF2::pgen::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/pgen.h"
 }
 
 
-void SF2::inst::ReadFrom(InputStream* file)
+void SF2::inst::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/inst.h"
 }
 
 
-void SF2::ibag::ReadFrom(InputStream* file)
+void SF2::ibag::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/ibag.h"
 }
 
 
-void SF2::imod::ReadFrom(InputStream* file)
+void SF2::imod::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/imod.h"
 }
 
 
-void SF2::igen::ReadFrom(InputStream* file)
+void SF2::igen::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/igen.h"
 }
 
 
-void SF2::shdr::ReadFrom(InputStream* file)
+void SF2::shdr::ReadFrom(juce::InputStream* file)
 {
 	#include "sf2-chunks/shdr.h"
 }
@@ -105,13 +105,13 @@ SF2::Hydra::~Hydra()
 }
 
 
-void SF2::Hydra::ReadFrom(InputStream* file, int64 pdtaChunkEnd)
+void SF2::Hydra::ReadFrom(juce::InputStream* file, int64_t pdtaChunkEnd)
 {
 	int i, numItems;
 
 	#define HandleChunk(chunkName) 	\
 		if (FourCCEquals(chunk.id, #chunkName)) { 	\
-			numItems = chunk.size / SF2::chunkName::sizeInFile; 	\
+			numItems = int (chunk.size) / SF2::chunkName::sizeInFile; 	\
 			chunkName##NumItems = numItems; 	\
 			chunkName##Items = new SF2::chunkName[numItems]; 	\
 			for (i = 0; i < numItems; ++i) 	\

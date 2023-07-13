@@ -82,7 +82,7 @@ void SFZEG::noteOff()
 void SFZEG::fastRelease()
 {
 	segment = Release;
-	samplesUntilNextSegment = fastReleaseTime * sampleRate;
+	samplesUntilNextSegment = long (fastReleaseTime * sampleRate);
 	slope = -level / samplesUntilNextSegment;
 	segmentIsExponential = false;
 }
@@ -96,7 +96,7 @@ void SFZEG::startDelay()
 		segment = Delay;
 		level = 0.0;
 		slope = 0.0;
-		samplesUntilNextSegment = parameters.delay * sampleRate;
+		samplesUntilNextSegment = long (parameters.delay * sampleRate);
 		segmentIsExponential = false;
 		}
 }
@@ -109,7 +109,7 @@ void SFZEG::startAttack()
 	else {
 		segment = Attack;
 		level = parameters.start / 100.0;
-		samplesUntilNextSegment = parameters.attack * sampleRate;
+		samplesUntilNextSegment = long (parameters.attack * sampleRate);
 		slope = 1.0 / samplesUntilNextSegment;
 		segmentIsExponential = false;
 		}
@@ -124,7 +124,7 @@ void SFZEG::startHold()
 		}
 	else {
 		segment = Hold;
-		samplesUntilNextSegment = parameters.hold * sampleRate;
+		samplesUntilNextSegment = long (parameters.hold * sampleRate);
 		level = 1.0;
 		slope = 0.0;
 		segmentIsExponential = false;
@@ -138,7 +138,7 @@ void SFZEG::startDecay()
 		startSustain();
 	else {
 		segment = Decay;
-		samplesUntilNextSegment = parameters.decay * sampleRate;
+		samplesUntilNextSegment = long (parameters.decay * sampleRate);
 		level = 1.0;
 		if (exponentialDecay) {
 			// I don't truly understand this; just following what LinuxSampler does.
@@ -188,7 +188,7 @@ void SFZEG::startRelease()
 		}
 
 	segment = Release;
-	samplesUntilNextSegment = release * sampleRate;
+	samplesUntilNextSegment = long (release * sampleRate);
 	if (exponentialDecay) {
 		// I don't truly understand this; just following what LinuxSampler does.
 		float mysterySlope = -9.226 / samplesUntilNextSegment;

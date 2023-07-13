@@ -24,21 +24,21 @@ class LogFifo {
 		LogFifo();
 		~LogFifo();
 
-		void logMessage(const String& message);
+		void logMessage(const juce::String& message);
 		void	relayMessages();
-		String	nextMessage();
+	juce::String	nextMessage();
 		bool	hasMessage();
 
 	protected:
 		enum {
 			capacity = 512 * 1024,
 			};
-		AbstractFifo	fifo;
+	juce::AbstractFifo	fifo;
 		char	buffer[capacity];
 	};
 
-extern void setupLogging(Logger* logger);
-extern void fifoLogMessage(const String& message);
+extern void setupLogging(juce::Logger* logger);
+extern void fifoLogMessage(const juce::String& message);
 extern void relayFifoLogMessages();
 
 extern void dbgprintf(const char* msg, ...);
