@@ -16,8 +16,7 @@ END_JUCE_MODULE_DECLARATION
 #include "SFZero/SFZVoice.h"
 #include "SFZero/SFZSound.h"
 #include "SFZero/SFZSynth.h"
-#include "SFZero/SFZSound.h"
-#include "SFZero/SFZSound.h"
 #include "SFZero/SF2Sound.h"
+#include "SFZero/SFZDebug.h"
 
 

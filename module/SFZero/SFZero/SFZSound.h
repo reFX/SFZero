@@ -11,10 +11,10 @@ class SFZSample;
 class SFZSound : public juce::SynthesiserSound {
 	public:
 		SFZSound(const juce::File& file);
-		~SFZSound();
+		~SFZSound() override;
 
-		bool	appliesToNote(const int midiNoteNumber);
-		bool	appliesToChannel(const int midiChannel);
+		bool	appliesToNote(const int midiNoteNumber) override;
+		bool	appliesToChannel(const int midiChannel) override;
 
 		void	addRegion(SFZRegion* region); 	// Takes ownership of the region.
 		SFZSample*	addSample(juce::String path, juce::String defaultPath = {});

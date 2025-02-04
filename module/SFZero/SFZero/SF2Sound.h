@@ -10,10 +10,10 @@ class SF2Sound : public SFZSound
 {
 public:
 	SF2Sound(const juce::File& file);
-	~SF2Sound();
+	~SF2Sound() override;
 
-	void	loadRegions();
-	void	loadSamples(juce::AudioFormatManager* formatManager, double* progressVar = NULL, juce::Thread* thread = NULL);
+	void	loadRegions() override;
+	void	loadSamples(juce::AudioFormatManager* formatManager, double* progressVar = NULL, juce::Thread* thread = NULL) override;
 
 	struct Preset
 	{
@@ -30,10 +30,10 @@ public:
 		};
 	void	addPreset(Preset* preset);
 
-	int	numSubsounds();
-	juce::String	subsoundName(int whichSubsound);
-	void	useSubsound(int whichSubsound);
-	int 	selectedSubsound();
+	int	numSubsounds() override;
+	juce::String	subsoundName(int whichSubsound) override;
+	void	useSubsound(int whichSubsound) override;
+	int 	selectedSubsound() override;
 
 	SFZSample* sampleFor (unsigned long sampleRate);
 	void setSamplesBuffer (juce::AudioSampleBuffer* buffer);

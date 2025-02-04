@@ -1,7 +1,5 @@
 #include "SFZeroEditor.h"
 #include "SFZeroAudioProcessor.h"
-#include "SFZSound.h"
-#include "SFZDebug.h"
 #include <time.h>
 
 using namespace SFZero;
@@ -18,35 +16,35 @@ enum {
 
 SFZeroEditor::SFZeroEditor(SFZeroAudioProcessor* ownerFilter)
 	: AudioProcessorEditor(ownerFilter),
-		fileLabel(String::empty, "File... (click here to choose)"),
-		pathLabel(String::empty),
+		fileLabel(juce::String(), "File... (click here to choose)"),
+		pathLabel(juce::String()),
 		showingInfo(showingSoundInfo),
-		midiKeyboard(ownerFilter->keyboardState, MidiKeyboardComponent::horizontalKeyboard),
+		midiKeyboard(ownerFilter->keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard),
 		progressBar(NULL)
 {
 	setSize(500, 300);
 
 #ifdef JUCE_MAC
-	Font fileFont("Helvetica", 22.0, Font::bold);
-	Font labelFont("Helvetica", 15.0, Font::plain);
+	juce::Font fileFont(juce::FontOptions("Helvetica", 22.0, juce::Font::bold));
+	juce::Font labelFont(juce::FontOptions("Helvetica", 15.0, juce::Font::plain));
 #else
-	Font fileFont("Ariel", 22.0, Font::bold);
-	Font labelFont("Ariel", 15.0, Font::plain);
+	juce::Font fileFont(juce::FontOptions("Ariel", 22.0, juce::Font::bold));
+	juce::Font labelFont(juce::FontOptions("Ariel", 15.0, juce::Font::plain));
 #endif
 
 	addAndMakeVisible(&fileLabel);
 	fileLabel.setFont(fileFont);
-	fileLabel.setColour(Label::textColourId, Colours::grey);
+	fileLabel.setColour(juce::Label::textColourId, juce::Colours::grey);
 	fileLabel.addClickListener(this);
 
 	addAndMakeVisible(&pathLabel);
 	pathLabel.setFont(labelFont);
-	pathLabel.setColour(Label::textColourId, Colours::grey);
+	pathLabel.setColour(juce::Label::textColourId, juce::Colours::grey);
 	pathLabel.addClickListener(this);
 
 	addAndMakeVisible(&infoLabel);
 	infoLabel.setFont(labelFont);
-	infoLabel.setJustificationType(Justification::topLeft);
+	infoLabel.setJustificationType(juce::Justification::topLeft);
 	infoLabel.addClickListener(this);
 
 	addAndMakeVisible(&midiKeyboard);
@@ -54,9 +52,9 @@ SFZeroEditor::SFZeroEditor(SFZeroAudioProcessor* ownerFilter)
 
 	startTimer(200);
 
-	File sfzFile = ownerFilter->getSfzFile();
-	if (sfzFile != File::nonexistent) {
-		updateFile(&sfzFile);
+	juce::File sfzFile = ownerFilter->getSfzFile();
+	if (sfzFile != juce::File()) {
+		updateFile(sfzFile);
 		showSoundInfo();
 		SFZSound* sound = ownerFilter->getSound();
 		if (sound && sound->numSubsounds() > 1)
@@ -73,9 +71,9 @@ SFZeroEditor::~SFZeroEditor()
 }
 
 
-void SFZeroEditor::paint(Graphics& g)
+void SFZeroEditor::paint(juce::Graphics& g)
 {
-	g.fillAll(Colours::white);
+	g.fillAll(juce::Colours::white);
 }
 
 
@@ -95,7 +93,7 @@ void SFZeroEditor::resized()
 }
 
 
-void SFZeroEditor::labelClicked(Label* clickedLabel)
+void SFZeroEditor::labelClicked(juce::Label* clickedLabel)
 {
 	if (clickedLabel == &fileLabel)
 		chooseFile();
@@ -105,7 +103,7 @@ void SFZeroEditor::labelClicked(Label* clickedLabel)
 			SFZeroAudioProcessor* processor = getProcessor();
 			SFZSound* sound = processor->getSound();
 			if (sound) {
-				PopupMenu menu;
+				juce::PopupMenu menu;
 				int selectedSubsound = sound->selectedSubsound();
 				int numSubsounds = sound->numSubsounds();
 				for (int i = 0; i < numSubsounds; ++i) {
@@ -159,18 +157,18 @@ void SFZeroEditor::timerCallback()
 
 void SFZeroEditor::chooseFile()
 {
-	FileChooser chooser(
+	juce::FileChooser chooser(
 		"Select an SFZ file...",
-		File::nonexistent,
+		juce::File(),
 		"*.sfz;*.SFZ;*.sf2;*.SF2");
 	if (chooser.browseForFileToOpen()) {
-		File sfzFile(chooser.getResult());
-		setFile(&sfzFile);
+		juce::File sfzFile(chooser.getResult());
+		setFile(sfzFile);
 		}
 }
 
 
-void SFZeroEditor::setFile(File* newFile)
+void SFZeroEditor::setFile(const juce::File& newFile)
 {
 	SFZeroAudioProcessor* processor = getProcessor();
 	processor->setSfzFileThreaded(newFile);
@@ -180,10 +178,10 @@ void SFZeroEditor::setFile(File* newFile)
 }
 
 
-void SFZeroEditor::updateFile(File* file)
+void SFZeroEditor::updateFile(const juce::File& file)
 {
-	fileLabel.setText(file->getFileName(), dontSendNotification);
-	fileLabel.setColour(Label::textColourId, Colours::black);
+	fileLabel.setText(file.getFileName(), juce::dontSendNotification);
+	fileLabel.setColour(juce::Label::textColourId, juce::Colours::black);
 	showPath();
 }
 
@@ -193,7 +191,7 @@ void SFZeroEditor::showSoundInfo()
 	SFZeroAudioProcessor* processor = getProcessor();
 	SFZSound* sound = processor->getSound();
 	if (sound)
-		infoLabel.setText(sound->getErrorsString(), dontSendNotification);
+		infoLabel.setText(sound->getErrorsString(), juce::dontSendNotification);
 	showingInfo = showingSoundInfo;
 }
 
@@ -201,7 +199,7 @@ void SFZeroEditor::showSoundInfo()
 void SFZeroEditor::showVoiceInfo()
 {
 	SFZeroAudioProcessor* processor = getProcessor();
-	infoLabel.setText(processor->voiceInfoString(), dontSendNotification);
+	infoLabel.setText(processor->voiceInfoString(), juce::dontSendNotification);
 	showingInfo = showingVoiceInfo;
 }
 
@@ -211,9 +209,9 @@ void SFZeroEditor::showVersion()
 	struct tm tm;
 	strptime(__DATE__, "%b %d %Y", &tm);
 	char str[64];
-	sprintf(str, "SFZero beta %d.%d.%d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-	pathLabel.setText(str, dontSendNotification);
-	pathLabel.setColour(Label::textColourId, Colours::grey);
+	snprintf(str, 64, "SFZero beta %d.%d.%d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+	pathLabel.setText(str, juce::dontSendNotification);
+	pathLabel.setColour(juce::Label::textColourId, juce::Colours::grey);
 	hideProgress();
 	showing = showingVersion;
 }
@@ -222,10 +220,10 @@ void SFZeroEditor::showVersion()
 void SFZeroEditor::showPath()
 {
 	SFZeroAudioProcessor* processor = getProcessor();
-	File file = processor->getSfzFile();
+	juce::File file = processor->getSfzFile();
 	pathLabel.setText(
-		file.getParentDirectory().getFullPathName(), dontSendNotification);
-	pathLabel.setColour(Label::textColourId, Colours::grey);
+		file.getParentDirectory().getFullPathName(), juce::dontSendNotification);
+	pathLabel.setColour(juce::Label::textColourId, juce::Colours::grey);
 	hideProgress();
 	showing = showingPath;
 }
@@ -239,8 +237,8 @@ void SFZeroEditor::showSubsound()
 		return;
 
 	pathLabel.setText(
-		sound->subsoundName(sound->selectedSubsound()), dontSendNotification);
-	pathLabel.setColour(Label::textColourId, Colours::black);
+		sound->subsoundName(sound->selectedSubsound()), juce::dontSendNotification);
+	pathLabel.setColour(juce::Label::textColourId, juce::Colours::black);
 	hideProgress();
 	showing = showingSubsound;
 }
@@ -251,7 +249,7 @@ void SFZeroEditor::showProgress()
 	SFZeroAudioProcessor* processor = getProcessor();
 	pathLabel.setVisible(false);
 	infoLabel.setVisible(false);
-	progressBar = new ProgressBar(processor->loadProgress);
+	progressBar = new juce::ProgressBar(processor->loadProgress);
 	addAndMakeVisible(progressBar);
 	int marginedWidth = getWidth() - 2 * hMargin;
 	progressBar->setBounds(
@@ -273,5 +271,19 @@ void SFZeroEditor::hideProgress()
 	infoLabel.setVisible(true);
 }
 
+bool SFZeroEditor::isInterestedInFileDrag (const juce::StringArray& files)
+{
+	if (files.size() == 1)
+	{
+		auto f = juce::File(files[0]);
+		if (f.hasFileExtension(".sfz") || f.hasFileExtension(".sf2"))
+			return true;
+	}
+	return false;
+}
 
+void SFZeroEditor::filesDropped (const juce::StringArray& files, int, int)
+{
+	setFile(juce::File(files[0]));
+}
 
