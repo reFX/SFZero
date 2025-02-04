@@ -4,7 +4,7 @@
 #include "SFZReader.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
+namespace SFZero {
 
 
 SFZSound::SFZSound(const juce::File& fileIn)
@@ -222,5 +222,4 @@ void SFZSound::dump()
 		itr.getValue()->dump();
 }
 
-
-
+}

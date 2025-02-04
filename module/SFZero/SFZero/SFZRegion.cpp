@@ -4,8 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 
-using namespace SFZero;
-
+namespace SFZero {
 
 void SFZEGParameters::clear()
 {
@@ -145,5 +144,4 @@ float SFZRegion::timecents2Secs(short timecents)
 	return pow(2.0, timecents / 1200.0);
 }
 
-
-
+}

@@ -1,21 +1,24 @@
 #include "SFZDebug.h"
 #include <stdarg.h>
 
-using namespace SFZero;
+namespace SFZero {
 
 #ifdef JUCE_DEBUG
 
-static LogFifo* fifo = NULL;
+static LogFifo* fifo = nullptr;
 
 
-LogFifo::LogFifo()
-	: fifo(capacity)
+LogFifo::LogFifo (juce::Logger* l)
+	: fifo(capacity), logger (l)
 {
 }
 
 
 LogFifo::~LogFifo()
 {
+	if (juce::Logger::getCurrentLogger() == logger.get())
+		juce::Logger::setCurrentLogger(nullptr);
+	SFZero::fifo = nullptr;
 }
 
 
@@ -115,29 +118,29 @@ bool LogFifo::hasMessage()
 
 
 
-void SFZero::setupLogging (juce::Logger* logger)
+void setupLogging (juce::Logger* logger)
 {
-	if (fifo == NULL)
-		fifo = new LogFifo();
+	if (fifo == nullptr)
+		fifo = new LogFifo(logger);
 	juce::Logger::setCurrentLogger(logger);
 }
 
 
-void SFZero::fifoLogMessage(const juce::String& message)
+void fifoLogMessage(const juce::String& message)
 {
 	if (fifo)
 		fifo->logMessage(message);
 }
 
 
-void SFZero::relayFifoLogMessages()
+void relayFifoLogMessages()
 {
 	if (fifo)
 		fifo->relayMessages();
 }
 
 
-void SFZero::dbgprintf(const char* msg, ...)
+void dbgprintf(const char* msg, ...)
 {
 	va_list args;
 	va_start(args, msg);
@@ -153,3 +156,4 @@ void SFZero::dbgprintf(const char* msg, ...)
 #endif 	// JUCE_DEBUG
 
 
+}

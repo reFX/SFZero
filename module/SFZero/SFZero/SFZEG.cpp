@@ -1,7 +1,7 @@
 #include "SFZEG.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
+namespace SFZero {
 
 static const float fastReleaseTime = 0.01;
 
@@ -201,5 +201,4 @@ void SFZEG::startRelease()
 		}
 }
 
-
-
+}

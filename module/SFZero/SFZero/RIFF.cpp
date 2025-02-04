@@ -1,7 +1,6 @@
 #include "RIFF.h"
 
-using namespace SFZero;
-
+namespace SFZero {
 
 void RIFFChunk::ReadFrom(juce::InputStream* file)
 {
@@ -48,6 +47,4 @@ juce::String RIFFChunk::ReadString(juce::InputStream* file)
 	return juce::String(str);
 }
 
-
-
-
+}

@@ -17,21 +17,22 @@
 
 namespace SFZero {
 
-class LogFifo {
+class LogFifo : public juce::DeletedAtShutdown {
 	public:
-		LogFifo();
+		LogFifo (juce::Logger* logger);
 		~LogFifo();
 
 		void logMessage(const juce::String& message);
-		void	relayMessages();
-	juce::String	nextMessage();
-		bool	hasMessage();
+		void			relayMessages();
+		juce::String	nextMessage();
+		bool			hasMessage();
 
 	protected:
 		enum {
 			capacity = 512 * 1024,
 			};
-	juce::AbstractFifo	fifo;
+		juce::AbstractFifo	fifo;
+		std::unique_ptr<juce::Logger> logger;
 		char	buffer[capacity];
 	};
 

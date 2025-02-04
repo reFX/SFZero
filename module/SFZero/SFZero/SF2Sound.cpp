@@ -3,8 +3,7 @@
 #include "SFZSample.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
-
+namespace SFZero {
 
 SF2Sound::SF2Sound(const juce::File& file)
 	: SFZSound(file)
@@ -123,4 +122,4 @@ void SF2Sound::setSamplesBuffer(juce::AudioSampleBuffer* buffer)
 }
 
 
-
+}

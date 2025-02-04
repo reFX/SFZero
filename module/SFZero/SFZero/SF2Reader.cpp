@@ -6,7 +6,7 @@
 #include "SF2Generator.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
+namespace SFZero {
 
 
 SF2Reader::SF2Reader(SF2Sound* soundIn, const juce::File& fileIn)
@@ -372,5 +372,4 @@ void SF2Reader::addGeneratorToRegion(
 		}
 }
 
-
-
+}

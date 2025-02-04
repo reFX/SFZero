@@ -2,8 +2,6 @@
 #include "SFZeroAudioProcessor.h"
 #include <time.h>
 
-using namespace SFZero;
-
 
 enum {
 	hMargin = 12,
@@ -56,7 +54,7 @@ SFZeroEditor::SFZeroEditor(SFZeroAudioProcessor* ownerFilter)
 	if (sfzFile != juce::File()) {
 		updateFile(sfzFile);
 		showSoundInfo();
-		SFZSound* sound = ownerFilter->getSound();
+		auto sound = ownerFilter->getSound();
 		if (sound && sound->numSubsounds() > 1)
 			showSubsound();
 		}
@@ -101,7 +99,7 @@ void SFZeroEditor::labelClicked(juce::Label* clickedLabel)
 	else if (clickedLabel == &pathLabel) {
 		if (showing == showingSubsound) {
 			SFZeroAudioProcessor* processor = getProcessor();
-			SFZSound* sound = processor->getSound();
+			auto sound = processor->getSound();
 			if (sound) {
 				juce::PopupMenu menu;
 				int selectedSubsound = sound->selectedSubsound();
@@ -141,7 +139,7 @@ void SFZeroEditor::timerCallback()
 	if (showing == showingProgress) {
 		SFZeroAudioProcessor* processor = getProcessor();
 		if (processor->loadProgress >= 1.0) {
-			SFZSound* sound = processor->getSound();
+			auto sound = processor->getSound();
 			if (sound && sound->numSubsounds() > 1)
 				showSubsound();
 			else
@@ -189,7 +187,7 @@ void SFZeroEditor::updateFile(const juce::File& file)
 void SFZeroEditor::showSoundInfo()
 {
 	SFZeroAudioProcessor* processor = getProcessor();
-	SFZSound* sound = processor->getSound();
+	auto sound = processor->getSound();
 	if (sound)
 		infoLabel.setText(sound->getErrorsString(), juce::dontSendNotification);
 	showingInfo = showingSoundInfo;
@@ -232,8 +230,8 @@ void SFZeroEditor::showPath()
 void SFZeroEditor::showSubsound()
 {
 	SFZeroAudioProcessor* processor = getProcessor();
-	SFZSound* sound = processor->getSound();
-	if (sound == NULL)
+	auto sound = processor->getSound();
+	if (sound == nullptr)
 		return;
 
 	pathLabel.setText(

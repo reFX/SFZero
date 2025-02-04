@@ -3,8 +3,7 @@
 #include "SFZSound.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
-
+namespace SFZero {
 
 SFZSynth::SFZSynth()
 	: Synthesiser()
@@ -146,5 +145,4 @@ juce::String SFZSynth::voiceInfoString()
 	return lines.joinIntoString("\n");
 }
 
-
-
+}

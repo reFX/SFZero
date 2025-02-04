@@ -4,8 +4,7 @@
 #include "StringSlice.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
-
+namespace SFZero {
 
 SFZReader::SFZReader(SFZSound* soundIn)
 	: sound(soundIn), line(1)
@@ -427,5 +426,4 @@ void SFZReader::error(const juce::String& message)
 	sound->addError(fullMessage);
 }
 
-
-
+}

@@ -1,8 +1,7 @@
 #include "SFZSample.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
-
+namespace SFZero {
 
 bool SFZSample::load(juce::AudioFormatManager* formatManager)
 {
@@ -85,5 +84,4 @@ void SFZSample::checkIfZeroed(const char* where)
 }
 #endif 	// JUCE_DEBUG
 
-
-
+}

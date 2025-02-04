@@ -4,7 +4,7 @@
 #include "SFZSample.h"
 #include "SFZDebug.h"
 
-using namespace SFZero;
+namespace SFZero {
 
 static const float globalGain = -1.0;
 
@@ -323,5 +323,4 @@ double SFZVoice::noteHz(double note, const double freqOfA)
 	return freqOfA * pow(2.0, note / 12.0);
 }
 
-
-
+}
