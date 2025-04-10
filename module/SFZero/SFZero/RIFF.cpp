@@ -43,7 +43,7 @@ void RIFFChunk::SeekAfter(juce::InputStream* file)
 juce::String RIFFChunk::ReadString(juce::InputStream* file)
 {
 	char* str = (char*)alloca (size);
-	file->read(str, size);
+	file->read(str, int (size));
 	return juce::String(str);
 }
 
