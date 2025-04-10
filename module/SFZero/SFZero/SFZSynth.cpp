@@ -106,7 +106,7 @@ void SFZSynth::noteOff(
 				startVoice(
 					voice, sound,
 					midiChannel, midiNoteNumber,
-					noteVelocities[midiNoteNumber] / 127.0);
+					noteVelocities[midiNoteNumber] / 127.0f);
 				}
 			}
 		}

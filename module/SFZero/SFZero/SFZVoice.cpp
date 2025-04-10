@@ -59,17 +59,17 @@ void SFZVoice::startNote (const int midiNoteNumber, const float floatVelocity, j
 	// velocity curve in a way that I could understand, although they mean
 	// "log10" when they say "log".
 	double velocityGainDB = -20.0 * log10((127.0 * 127.0) / (velocity * velocity));
-	velocityGainDB *= region->amp_veltrack / 100.0;
+	velocityGainDB *= region->amp_veltrack / 100.0f;
 	noteGainDB += velocityGainDB;
-	noteGainLeft = noteGainRight = juce::Decibels::decibelsToGain(noteGainDB);
+	noteGainLeft = noteGainRight = float (juce::Decibels::decibelsToGain(noteGainDB));
 	// The SFZ spec is silent about the pan curve, but a 3dB pan law seems
 	// common.  This sqrt() curve matches what Dimension LE does; Alchemy Free
 	// seems closer to sin(adjustedPan * pi/2).
 	double adjustedPan = (region->pan + 100.0) / 200.0;
-	noteGainLeft *= sqrt(1.0 - adjustedPan);
-	noteGainRight *= sqrt(adjustedPan);
+	noteGainLeft *= float (std::sqrt(1.0f - adjustedPan));
+	noteGainRight *= float (std::sqrt(adjustedPan));
 	ampeg.startNote(
-		&region->ampeg, floatVelocity, getSampleRate(), &region->ampeg_veltrack);
+		&region->ampeg, floatVelocity, float (getSampleRate()), &region->ampeg_veltrack);
 
 	// Offset/end.
 	sourceSamplePosition = region->offset;
@@ -270,7 +270,7 @@ juce::String SFZVoice::infoString()
 	#define numEGSegments (sizeof(egSegmentNames) / sizeof(egSegmentNames[0]))
 	const char* egSegmentName = "-Invalid-";
 	int egSegmentIndex = ampeg.segmentIndex();
-	if (egSegmentIndex >= 0 && egSegmentIndex < numEGSegments)
+	if (egSegmentIndex >= 0 && egSegmentIndex < int (numEGSegments))
 		egSegmentName = egSegmentNames[egSegmentIndex];
 
 	char str[128];

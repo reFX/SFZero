@@ -103,7 +103,7 @@ void SFZRegion::sf2ToSFZ()
 	ampeg.decay = timecents2Secs(short (ampeg.decay));
 	if (ampeg.sustain < 0.0)
 		ampeg.sustain = 0.0;
-	ampeg.sustain = 100.0 * juce::Decibels::decibelsToGain(-ampeg.sustain / 10.0);
+	ampeg.sustain = 100.0f * juce::Decibels::decibelsToGain(-ampeg.sustain / 10.0f);
 	ampeg.release = timecents2Secs(short (ampeg.release));
 
 	// Pin very short EG segments.  Timecents don't get to zero, and our EG is
@@ -141,7 +141,7 @@ void SFZRegion::dump()
 
 float SFZRegion::timecents2Secs(short timecents)
 {
-	return pow(2.0, timecents / 1200.0);
+	return pow(2.0f, timecents / 1200.0f);
 }
 
 }

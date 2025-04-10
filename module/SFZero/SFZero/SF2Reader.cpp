@@ -215,7 +215,7 @@ juce::AudioSampleBuffer* SF2Reader::readSamples (double* progressVar, juce::Thre
 		for (; samplesToConvert > 0; --samplesToConvert) {
 			// If we ever need to compile for big-endian platforms, we'll need to
 			// byte-swap here.
-			*out++ = *in++ / 32767.0;
+			*out++ = *in++ / 32767.0f;
 			}
 
 		samplesLeft -= samplesToRead;
@@ -260,7 +260,7 @@ void SF2Reader::addGeneratorToRegion(
 			region->end += amount->shortAmount * 32768;
 			break;
 		case SF2Generator::pan:
-			region->pan = amount->shortAmount * (2.0 / 10.0);
+			region->pan = amount->shortAmount * (2.0f / 10.0f);
 			break;
 		case SF2Generator::delayVolEnv:
 			region->ampeg.delay = amount->shortAmount;
@@ -294,7 +294,7 @@ void SF2Reader::addGeneratorToRegion(
 		case SF2Generator::initialAttenuation:
 			// The spec says "initialAttenuation" is in centibels.  But everyone
 			// seems to treat it as millibels.
-			region->volume += -amount->shortAmount / 100.0;
+			region->volume += -amount->shortAmount / 100.0f;
 			break;
 		case SF2Generator::endloopAddrsCoarseOffset:
 			region->loop_end += amount->shortAmount * 32768;
