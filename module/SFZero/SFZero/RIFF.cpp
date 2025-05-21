@@ -43,9 +43,11 @@ void RIFFChunk::SeekAfter(juce::InputStream* file)
 
 juce::String RIFFChunk::ReadString(juce::InputStream* file)
 {
-	char str[size];
-	file->read(str, size);
-	return juce::String(str);
+	std::vector<char> str;
+	str.resize (size);
+
+	file->read(str.data(), size);
+	return juce::String (str.data());
 }
 
 

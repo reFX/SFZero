@@ -6,8 +6,8 @@
 using namespace SFZero;
 
 
-SF2Sound::SF2Sound(const juce::File& file)
-	: SFZSound(file)
+SF2Sound::SF2Sound(const juce::File& file_)
+	: SFZSound(file_)
 {
 }
 
