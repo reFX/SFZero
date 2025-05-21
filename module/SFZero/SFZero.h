@@ -18,5 +18,6 @@ END_JUCE_MODULE_DECLARATION
 #include "SFZero/SFZSynth.h"
 #include "SFZero/SF2Sound.h"
 #include "SFZero/SFZDebug.h"
+#include "SFZero/SFZSample.h"
 
 
