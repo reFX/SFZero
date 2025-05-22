@@ -44,6 +44,7 @@ void SFZRegion::clear()
 	bend_down = -200;
 	volume = pan = 0.0;
 	amp_veltrack = 100.0;
+	seq_position = 1;
 	ampeg.clear();
 	ampeg_veltrack.clearMod();
 }

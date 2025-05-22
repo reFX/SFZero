@@ -37,10 +37,12 @@ void SFZReader::read(const char* text, unsigned int length)
 	const char* end = text + length;
 	char c = 0;
 
+	SFZRegion curGlobal;
 	SFZRegion curGroup;
 	SFZRegion curRegion;
 	SFZRegion* buildingRegion = NULL;
 	bool inControl = false;
+	bool inGroup = false;
 	juce::String defaultPath;
 
 	while (p < end) {
@@ -97,7 +99,12 @@ void SFZReader::read(const char* text, unsigned int length)
 				if (tag == "region") {
 					if (buildingRegion && buildingRegion == &curRegion)
 						finishRegion(&curRegion);
-					curRegion = curGroup;
+
+					if (inGroup)
+						curRegion = curGroup;
+					else
+						curRegion = curGlobal;
+
 					buildingRegion = &curRegion;
 					inControl = false;
 					}
@@ -105,8 +112,10 @@ void SFZReader::read(const char* text, unsigned int length)
 					if (buildingRegion && buildingRegion == &curRegion)
 						finishRegion(&curRegion);
 					curGroup.clear();
+					curGroup = curGlobal;
 					buildingRegion = &curGroup;
 					inControl = false;
+					inGroup = true;
 					}
 				else if (tag == "control") {
 					if (buildingRegion && buildingRegion == &curRegion)
@@ -115,6 +124,13 @@ void SFZReader::read(const char* text, unsigned int length)
 					buildingRegion = NULL;
 					inControl = true;
 					}
+				else if (tag == "global") {
+					if (buildingRegion && buildingRegion == &curRegion)
+						finishRegion(&curRegion);
+					curGlobal.clear();
+					buildingRegion = &curGlobal;
+					inControl = false;
+				}
 				else
 					error("Illegal tag");
 				}
@@ -273,6 +289,8 @@ void SFZReader::read(const char* text, unsigned int length)
 						buildingRegion->ampeg_veltrack.sustain = value.getFloatValue();
 					else if (opcode == "ampeg_vel2release")
 						buildingRegion->ampeg_veltrack.release = value.getFloatValue();
+					else if (opcode == "seq_position")
+						buildingRegion->seq_position = value.getIntValue();
 					else if (opcode == "default_path")
 						error("\"default_path\" outside of <control> tag");
 					else
@@ -393,6 +411,8 @@ int SFZReader::triggerValue(const juce::String& str)
 		return SFZRegion::first;
 	else if (str == "legato")
 		return SFZRegion::legato;
+	else if (str == "release_key")
+		return SFZRegion::release_key;
 	return SFZRegion::attack;
 }
 

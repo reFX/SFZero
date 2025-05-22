@@ -18,7 +18,7 @@ struct SFZEGParameters {
 class SFZRegion {
 	public:
 		enum Trigger {
-			attack, release, first, legato
+			attack, release, first, legato, release_key
 			};
 		enum LoopMode {
 			sample_loop, no_loop, one_shot, loop_continuous, loop_sustain
@@ -60,6 +60,7 @@ class SFZRegion {
 		int tune;
 		int pitch_keycenter, pitch_keytrack;
 		int bend_up, bend_down;
+		int seq_position;
 
 		float volume, pan;
 		float amp_veltrack;
