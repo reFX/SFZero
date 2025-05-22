@@ -186,19 +186,18 @@ void SFZReader::read(const char* text, unsigned int length)
 					if (buildingRegion == NULL)
 						error("Setting a parameter outside a region or group");
 					else if (opcode == "lokey")
-						buildingRegion->lokey = keyValue(value);
+						buildingRegion->lokey = (unsigned char)keyValue(value);
 					else if (opcode == "hikey")
-						buildingRegion->hikey = keyValue(value);
+						buildingRegion->hikey = (unsigned char)keyValue(value);
 					else if (opcode == "key") {
 						buildingRegion->hikey =
 						buildingRegion->lokey =
-						buildingRegion->pitch_keycenter =
-							keyValue(value);
+						buildingRegion->pitch_keycenter = (unsigned char)keyValue(value);
 						}
 					else if (opcode == "lovel")
-						buildingRegion->lovel = value.getIntValue();
+						buildingRegion->lovel = (unsigned char)value.getIntValue();
 					else if (opcode == "hivel")
-						buildingRegion->hivel = value.getIntValue();
+						buildingRegion->hivel = (unsigned char)value.getIntValue();
 					else if (opcode == "trigger")
 						buildingRegion->trigger = (SFZRegion::Trigger) triggerValue(value);
 					else if (opcode == "group")
@@ -212,7 +211,7 @@ void SFZReader::read(const char* text, unsigned int length)
 						if (endV < 0)
 							buildingRegion->negative_end = true;
 						else
-							buildingRegion->end = endV;
+							buildingRegion->end = (unsigned long)endV;
 						}
 					else if (opcode == "loop_mode") {
 						bool modeIsSupported =
@@ -358,7 +357,7 @@ const char* SFZReader::readPathInto(juce::String* pathOut, const char* pIn, cons
 
 int SFZReader::keyValue(const juce::String& str)
 {
-	char c = str[0];
+	char c = (char)str[0];
 	if (c >= '0' && c <= '9')
 		return str.getIntValue();
 
@@ -371,7 +370,7 @@ int SFZReader::keyValue(const juce::String& str)
 	else if (c >= 'a' && c <= 'g')
 		note = notes[c - 'a'];
 	int octaveStart = 1;
-	c = str[1];
+	c = (char)str[1];
 	if (c == 'b' || c == '#') {
 		octaveStart += 1;
 		if (c == 'b')

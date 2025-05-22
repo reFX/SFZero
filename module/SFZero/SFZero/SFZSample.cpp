@@ -10,7 +10,7 @@ bool SFZSample::load(juce::AudioFormatManager* formatManager)
 	if (reader == NULL)
 		return false;
 	sampleRate = reader->sampleRate;
-	sampleLength = reader->lengthInSamples;
+	sampleLength = (unsigned long)reader->lengthInSamples;
 	// Read some extra samples, which will be filled with zeros, so interpolation
 	// can be done without having to check for the edge all the time.
 	buffer = new juce::AudioSampleBuffer(reader->numChannels, int (sampleLength + 4));
@@ -18,8 +18,8 @@ bool SFZSample::load(juce::AudioFormatManager* formatManager)
 	juce::StringPairArray* metadata = &reader->metadataValues;
 	int numLoops = metadata->getValue("NumSampleLoops", "0").getIntValue();
 	if (numLoops > 0) {
-		loopStart = metadata->getValue("Loop0Start", "0").getLargeIntValue();
-		loopEnd = metadata->getValue("Loop0End", "0").getLargeIntValue();
+		loopStart = (unsigned long)metadata->getValue("Loop0Start", "0").getLargeIntValue();
+		loopEnd = (unsigned long)metadata->getValue("Loop0End", "0").getLargeIntValue();
 		}
 	delete reader;
 	return true;

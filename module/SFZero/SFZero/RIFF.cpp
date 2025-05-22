@@ -46,7 +46,7 @@ juce::String RIFFChunk::ReadString(juce::InputStream* file)
 	std::vector<char> str;
 	str.resize (size);
 
-	file->read(str.data(), size);
+	file->read(str.data(), int (size));
 	return juce::String (str.data());
 }
 

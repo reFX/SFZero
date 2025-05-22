@@ -65,7 +65,7 @@ void SFZSynth::noteOn(int midiChannel, int midiNoteNumber, float velocity)
 		int numRegions = sound->getNumRegions();
 		for (i = 0; i < numRegions; ++i) {
 			SFZRegion* region = sound->regionAt(i);
-			if (region->matches(midiNoteNumber, midiVelocity, trigger)) {
+			if (region->matches((unsigned char)midiNoteNumber, (unsigned char)midiVelocity, trigger)) {
 				SFZVoice* voice =
 					dynamic_cast<SFZVoice*>(
 						findFreeVoice(
@@ -78,7 +78,7 @@ void SFZSynth::noteOn(int midiChannel, int midiNoteNumber, float velocity)
 			}
 		}
 
-	noteVelocities[midiNoteNumber] = midiVelocity;
+	noteVelocities[midiNoteNumber] = (unsigned char)midiVelocity;
 }
 
 

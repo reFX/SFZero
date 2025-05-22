@@ -116,7 +116,7 @@ SFZRegion* SFZSound::getRegionFor(
 	int numRegions = regions.size();
 	for (int i = 0; i < numRegions; ++i) {
 		SFZRegion* region = regions[i];
-		if (region->matches(note, velocity, trigger))
+		if (region->matches((unsigned char)note, (unsigned char)velocity, trigger))
 			return region;
 		}
 
