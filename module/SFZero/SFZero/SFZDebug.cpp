@@ -34,7 +34,7 @@ void LogFifo::logMessage(const juce::String& message)
 		msgSize -= givenSize - totalSize;
 
 	// Write the count.
-	if (size1 >= sizeof(unsigned long)) {
+	if (size1 >= (int)sizeof(unsigned long)) {
 		memcpy(&buffer[start1], &msgSize, sizeof(unsigned long));
 		size1 -= sizeof(unsigned long);
 		start1 += sizeof(unsigned long);
