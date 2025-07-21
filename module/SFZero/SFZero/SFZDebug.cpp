@@ -25,7 +25,7 @@ void LogFifo::logMessage(const juce::String& message)
 
 	// Stupid String class doesn't really let us get number of bytes.
 	const char* bytes = message.getCharPointer();
-	unsigned long msgSize = strlen(bytes);
+	unsigned long msgSize = (unsigned long) strlen(bytes);
 	int totalSize = int (sizeof(unsigned long) + msgSize);
 	int start1, size1, start2, size2;
 	fifo.prepareToWrite(totalSize, start1, size1, start2, size2);
