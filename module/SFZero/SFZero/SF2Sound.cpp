@@ -84,7 +84,7 @@ juce::String SF2Sound::subsoundName(int whichSubsound)
 		result += preset->bank;
 		result += "/";
 		}
-	result += preset->preset;
+	result += preset->preset + 1;
 	result += ": ";
 	result += preset->name;
 	return result;
