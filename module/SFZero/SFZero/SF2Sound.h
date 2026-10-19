@@ -41,7 +41,7 @@ public:
 protected:
 	juce::OwnedArray<Preset>	presets;
 	juce::HashMap<int64_t, SFZSample*>	samplesByRate;
-	int selectedPreset;
+	int selectedPreset = 0;
 };
 
 }

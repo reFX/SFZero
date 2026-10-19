@@ -79,6 +79,9 @@ int SF2Sound::numSubsounds()
 juce::String SF2Sound::subsoundName(int whichSubsound)
 {
 	Preset* preset = presets[whichSubsound];
+	if (preset == NULL)
+		return {};
+
 	juce::String result;
 	if (preset->bank != 0) {
 		result += preset->bank;
@@ -93,9 +96,17 @@ juce::String SF2Sound::subsoundName(int whichSubsound)
 
 void SF2Sound::useSubsound(int whichSubsound)
 {
-	selectedPreset = whichSubsound;
 	regions.clear();
-	regions.addArray(presets[whichSubsound]->regions);
+
+	// The preset list is empty if the file failed to parse, or whichSubsound may be out of range.
+	Preset* preset = presets[whichSubsound];
+	if (preset == NULL) {
+		selectedPreset = 0;
+		return;
+		}
+
+	selectedPreset = whichSubsound;
+	regions.addArray(preset->regions);
 }
 
 
